@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .clearfix::before,
+        .clearfix:after {
+            clear: both;
+            content: "";
+            display: table;
+            height: 0;
+        }
+        
+        ul li {
+            float: left;
+            list-style: none;
+        }
+        
+        .tab {
+            width: 500px;
+            margin: 50px auto 0;
+        }
+        
+        .nav1 li {
+            /*注意没给宽度*/
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid black;
+            box-sizing: border-box;
+        }
+        
+        .nav2 li {
+            width: 100%;
+            height: 300px;
+            text-align: center;
+            line-height: 300px;
+            font-size: 30px;
+            display: none;
+        }
+        
+        ul .active {
+            display: block;
+            color: white;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 评分规则：	满分100，
+	上面tab的下边线没去掉-10
+	不能更换颜色-10
+	不能更改tab长度-10
+	不是动态添加的-30
+	tab的js没实现-40 -->
+    <!-- colors = ["red","orange","yellow",'green','blue','black']; -->
+    <!-- 题目：根据给出的字符串中的颜色和长度，动态配置一个tab切换 -->
+    <!-- 提示：样式都写好了，不能再加样式，缺少的样式js来补，利用js动态添加li标签，其中nav2用类名active来切换状态 -->
+
+
+
+    <div class="tab">
+        <ul class="nav1 clearfix"></ul>
+        <ul class="nav2 clearfix"></ul>
+    </div>
+
+
+
+
+    <script>
+        var nav1 = document.querySelector(".nav1");
+        var nav2 = document.querySelector(".nav2");
+        var tab = document.querySelector(".tab");
+        var tabwidth = tab.offsetWidth;
+        var colors = ["red", "orange", "pink", "yellow", 'green', 'blue', 'black'];
+        for (i = 0; i < colors.length; i++) {
+            // 动态创建一个li
+            var li = document.createElement('li');
+            // 把li插入nav1中
+            nav1.appendChild(li);
+            // 通过JS修改LI的样式
+            li.style.width = tabwidth / colors.length + 'px';
+            li.style.height = "40px";
+            li.style.backgroundColor = colors[i]
+            li.innerHTML = colors[i];
+            li.style.color = '#fff';
+
+            // 给LI自定义索引号
+            li.setAttribute('index', i);
+            // 给nav1 li 添加点击事件
+            li.addEventListener("click", function() {
+                var index = this.getAttribute('index');
+                for (i = 0; i < colors.length; i++) {
+                    nav1.children[i].style.borderBottom = '2px solid black';
+                }
+                this.style.borderBottom = 'none';
+                for (i = 0; i < colors.length; i++) {
+                    var li = document.createElement('li');
+                    nav2.appendChild(li);
+                    li.style.backgroundColor = colors[i]
+                    nav2.children[i].style.display = 'none'
+                    li.innerHTML = colors[i];
+                    li.style.color = '#fff';
+                }
+                nav2.children[index].style.display = 'block'
+            })
+        }
+    </script>
+</body>
+
+</html>
